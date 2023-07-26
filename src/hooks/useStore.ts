@@ -1,5 +1,5 @@
 import { useReducer } from 'react'
-import { type State, type Action, type Language, type FromLanguage } from '../types'
+import { type State, type Action, type Language, type FromLanguage } from '../types.d'
 
 // 2. Create a reducer
 
