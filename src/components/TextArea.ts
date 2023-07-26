@@ -1,15 +1,27 @@
 import { Form } from 'react-bootstrap'
-import { SectionType } from '../types.d'
+import { SectionType } from '../types'
 
-type Props =
-  | { type: SectionType }
+interface Props {
+  type: SectionType
+  placeholder: string
+  loading?: boolean
+  onChange: (value: string) => void
+  value: string
+}
 
-export const TextArea = ({ loading, type, value, onChange }) => {
-    return(
-        <Form.Control
-            as='textarea'
-            placeholder='Traducción'
-            style={{ height: '150px' }}
-        />
-    )
+const commonStyles = { border: 0, height: '200px' }
+
+export const TextArea = ({ type, placeholder, loading, value, onChange }: Props) => {
+  const styles = type === SectionType.From
+    ? commonStyles
+    : { ...commonStyles, backgroundColor: '#f5f5f5' }
+    
+  return (
+    <Form
+      autoFocus={type === SectionType.From}
+      as='textarea'
+      placeholder={placeholder}
+      style={styles}
+    />
+  )
 }
