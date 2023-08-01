@@ -34,7 +34,7 @@ function App () {
         setResult(result)
       })
       .catch(() => { setResult('Error') })
-  }, [fromText])
+  }, [fromText, fromLanguage, toLanguage])
 
   return (
       <Container fluid>
