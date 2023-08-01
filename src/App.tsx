@@ -7,6 +7,8 @@ import { ArrowsIcon } from './components/icons'
 import { LanguageSelector } from './components/LanguageSelector'
 import { SectionType } from './types.d'
 import { TextArea } from './components/TextArea'
+import { useEffect } from 'react'
+import { traslate } from './services/traslate'
 
 // google-traslate-clone
 
@@ -23,6 +25,17 @@ function App () {
     setFromText,
     setResult
   } = useStore()
+
+  useEffect(() => {
+    if (fromText === '') return
+    traslate({ fromLanguage, toLanguage, text: fromText })
+      .then(result => {
+        if (result == null) return
+        setResult(result)
+      })
+      .catch(() => { setResult('Error') })
+  }, [fromText])
+
   return (
       <Container fluid>
         <h2>Google Traslate</h2>
