@@ -11,7 +11,18 @@ import { TextArea } from './components/TextArea'
 // google-traslate-clone
 
 function App () {
-  const { fromLanguage, toLanguage, fromText, result, interchangeLanguages, setFromLanguage, setToLanguage, setFromText, setResult } = useStore()
+  const {
+    loading,
+    fromLanguage,
+    toLanguage,
+    fromText,
+    result,
+    interchangeLanguages,
+    setFromLanguage,
+    setToLanguage,
+    setFromText,
+    setResult
+  } = useStore()
   return (
       <Container fluid>
         <h2>Google Traslate</h2>
@@ -47,6 +58,7 @@ function App () {
                 onChange={setToLanguage}
               />
               <TextArea
+                loading={loading}
                 type={SectionType.To}
                 value={result}
                 onChange={setResult}
