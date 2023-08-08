@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Stack } from 'react-bootstrap'
 import './App.css'
 import { useStore } from './hooks/useStore'
 import { AUTO_LANGUAGE } from './constants'
-import { ArrowsIcon } from './components/icons'
+import { ArrowsIcon, ClipboardIcon } from './components/icons'
 import { LanguageSelector } from './components/LanguageSelector'
 import { SectionType } from './types.d'
 import { TextArea } from './components/TextArea'
@@ -14,6 +14,10 @@ import { useDebounce } from './hooks/useDebounce'
 // google-traslate-clone
 
 function App () {
+  const handleClipboard = () => {
+    navigator.clipboard.writeText(result).catch(() => {})
+  }
+
   const {
     loading,
     fromLanguage,
@@ -73,12 +77,20 @@ function App () {
                 value={toLanguage}
                 onChange={setToLanguage}
               />
-              <TextArea
-                loading={loading}
-                type={SectionType.To}
-                value={result}
-                onChange={setResult}
-              />
+              <div style={{ position: 'relative' }}>
+                <TextArea
+                  loading={loading}
+                  type={SectionType.To}
+                  value={result}
+                  onChange={setResult}
+                />
+                <Button
+                  variant='link'
+                  style={{ position: 'absolute', left: 0, bottom: 0 }}
+                  onClick={ () => { handleClipboard() }}>
+                  <ClipboardIcon/>
+                </Button>
+              </div>
             </Stack>
           </Col>
         </Row>
