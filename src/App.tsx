@@ -9,6 +9,7 @@ import { SectionType } from './types.d'
 import { TextArea } from './components/TextArea'
 import { useEffect } from 'react'
 import { traslate } from './services/traslate'
+import { useDebounce } from './hooks/useDebounce'
 
 // google-traslate-clone
 
@@ -26,15 +27,17 @@ function App () {
     setResult
   } = useStore()
 
+  const debouncedFromText = useDebounce(fromText, 250)
+
   useEffect(() => {
-    if (fromText === '') return
-    traslate({ fromLanguage, toLanguage, text: fromText })
-      .then(result => {
+    if (debouncedFromText === '') return
+    traslate({ fromLanguage, toLanguage, text: debouncedFromText })
+      .then((result) => {
         if (result == null) return
         setResult(result)
       })
       .catch(() => { setResult('Error') })
-  }, [fromText, fromLanguage, toLanguage])
+  }, [debouncedFromText, fromLanguage, toLanguage])
 
   return (
       <Container fluid>
