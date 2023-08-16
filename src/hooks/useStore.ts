@@ -1,8 +1,8 @@
 import { useReducer } from 'react'
-import { type State, type Action, type Language, type FromLanguage } from '../types.d'
+import { AUTO_LANGUAGE } from '../constants'
+import { type FromLanguage, type Language, type Action, type State } from '../types'
 
-// 2. Create a reducer
-
+// 1. Create a initialState
 const initialState: State = {
   fromLanguage: 'auto',
   toLanguage: 'en',
@@ -11,12 +11,15 @@ const initialState: State = {
   loading: false
 }
 
+// 2. Create a reducer
 function reducer (state: State, action: Action) {
   const { type } = action
 
   if (type === 'INTERCHANGE_LANGUAGES') {
-    if (state.fromLanguage === 'auto') return state
+    if (state.fromLanguage === AUTO_LANGUAGE) return state
+
     const loading = state.fromText !== ''
+
     return {
       ...state,
       loading,
@@ -28,7 +31,9 @@ function reducer (state: State, action: Action) {
 
   if (type === 'SET_FROM_LANGUAGE') {
     if (state.fromLanguage === action.payload) return state
+
     const loading = state.fromText !== ''
+
     return {
       ...state,
       fromLanguage: action.payload,
@@ -40,6 +45,7 @@ function reducer (state: State, action: Action) {
   if (type === 'SET_TO_LANGUAGE') {
     if (state.toLanguage === action.payload) return state
     const loading = state.fromText !== ''
+
     return {
       ...state,
       toLanguage: action.payload,
@@ -50,6 +56,7 @@ function reducer (state: State, action: Action) {
 
   if (type === 'SET_FROM_TEXT') {
     const loading = action.payload !== ''
+
     return {
       ...state,
       loading,
@@ -70,6 +77,7 @@ function reducer (state: State, action: Action) {
 }
 
 export function useStore () {
+  // 3. usar el hook useReducer
   const [{
     fromLanguage,
     toLanguage,
@@ -77,18 +85,23 @@ export function useStore () {
     result,
     loading
   }, dispatch] = useReducer(reducer, initialState)
+
   const interchangeLanguages = () => {
     dispatch({ type: 'INTERCHANGE_LANGUAGES' })
   }
+
   const setFromLanguage = (payload: FromLanguage) => {
     dispatch({ type: 'SET_FROM_LANGUAGE', payload })
   }
+
   const setToLanguage = (payload: Language) => {
     dispatch({ type: 'SET_TO_LANGUAGE', payload })
   }
+
   const setFromText = (payload: string) => {
     dispatch({ type: 'SET_FROM_TEXT', payload })
   }
+
   const setResult = (payload: string) => {
     dispatch({ type: 'SET_RESULT', payload })
   }

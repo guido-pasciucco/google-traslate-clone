@@ -4,8 +4,8 @@ module.exports = {
     es2021: true
   },
   extends: [
-    'standard-with-typescript',
-    'plugin:react/recommended'
+    'plugin:react/recommended',
+    'standard-with-typescript'
   ],
   overrides: [
   ],
@@ -20,6 +20,6 @@ module.exports = {
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
     'react/react-in-jsx-scope': 'off',
-    indent: 'off'
+    'react/prop-types': 'off'
   }
 }
